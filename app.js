@@ -90,25 +90,14 @@ app.post('/generate-qr', async (req, res) => {
     ctx.fillStyle = '#111827';
     ctx.fillText(text, canvas.width / 2, captionY);
 
-    // Save the final image
-    const filePath = `./qrcodes/qr-${Date.now()}.png`;
-    const out = fs.createWriteStream(filePath);
-    const stream = canvas.createPNGStream();
-    stream.pipe(out);
-    out.on('finish', () => {
-      // Send the file as a download
-      res.download(filePath, (err) => {
-        if (err) {
-          console.error('Error sending file:', err);
-          res.status(500).json({ message: 'Error generating QR code' });
-        }
+    // Convert canvas to buffer and send directly
+    const buffer = canvas.toBuffer('image/png');
+    
+    // Set headers for download
+    res.setHeader('Content-Type', 'image/png');
+    res.setHeader('Content-Disposition', `attachment; filename="qr-code-${Date.now()}.png"`);
+    res.send(buffer);
 
-        // Clean up: delete the file after download
-        fs.unlink(filePath, (err) => {
-          if (err) console.error('Error deleting file:', err);
-        });
-      });
-    });
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ message: 'Internal server error' });
