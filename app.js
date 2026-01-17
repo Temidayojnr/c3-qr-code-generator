@@ -61,8 +61,8 @@ app.post('/generate-qr', async (req, res) => {
 
     // Add center text below the logo (dynamic, defaults to empty)
     if (center) {
-      ctx.font = 'bold 20px "Segoe UI", Arial, sans-serif';
-      ctx.fillStyle = '#333';
+      ctx.font = '600 22px "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+      ctx.fillStyle = '#1f2937';
       ctx.textAlign = 'center';
       ctx.fillText(center, canvas.width / 2, logoY + logoSize / 2 + 25);
     }
@@ -80,13 +80,14 @@ app.post('/generate-qr', async (req, res) => {
     const captionY = qrY + 300 + 40; // more space below QR codes
 
     // Add the URL below both QR codes
-    ctx.font = '16px "Segoe UI", Arial, sans-serif';
-    ctx.fillStyle = '#333'; // Dark text color for readability
+    ctx.font = '500 17px "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+    ctx.fillStyle = '#4b5563'; // Dark text color for readability
     ctx.textAlign = 'center';
     ctx.fillText(url, canvas.width / 2, captionY + 35); // Text centered below both QR codes
 
     // Add main centralized text above the URL
-    ctx.font = 'bold 24px "Segoe UI", Arial, sans-serif';
+    ctx.font = '700 26px "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+    ctx.fillStyle = '#111827';
     ctx.fillText(text, canvas.width / 2, captionY);
 
     // Save the final image
